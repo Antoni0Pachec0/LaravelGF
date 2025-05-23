@@ -1,0 +1,58 @@
+.custom-sidebar {
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  height: 100px;
+}
+
+.logo-img {
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+  height: 80px;
+}
+
+.menu-item {
+  margin-left: 15px;
+  padding: 10px 16px;
+}
+
+.selected-item {
+  background-color: #f3f3f3 !important;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  color: transparent !important;
+}
+
+.selected-icon {
+  color: #08093f !important;
+}
+
+.selected-text {
+  color: #08093f !important;
+  font-weight: bold;
+}
+
+.v-spacer {
+  flex-grow: 1;
+}
+
+.logout-item {
+  margin-left: 15px;
+  padding: 10px 16px;
+}
+
+.toggle-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  background-color: transparent;
+  color: white;
+  border-radius: 50%;
+  z-index: 10;
+}

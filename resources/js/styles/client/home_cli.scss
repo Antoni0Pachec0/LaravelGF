@@ -1,0 +1,388 @@
+.fondo {
+  background-color: #f3f3f3;
+  height: 100%;
+}
+
+.chip-filtro {
+  border-radius: 20px;
+  margin: 12px;
+  margin-bottom: 30px;
+  min-width: 100px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  max-width: calc(100% / 10 - 12px);
+  white-space: nowrap;
+}
+
+.productos-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.productos-container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.producto-card {
+  background-color: #e6e6e6;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.pedidos-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.pedido-item {
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.v-divider {
+  margin-bottom: 15px;
+}
+
+.cantidad-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 15px;
+}
+
+.cantidad-wrapper {
+  display: flex;
+  align-items: center;
+  border: 2px solid #c9c9c9;
+  border-radius: 8px;
+  padding: 4px 8px;
+  background-color: white;
+  min-width: 60px;
+  transition: width 0.2s ease-in-out;
+  margin-left: 15px;
+}
+
+.cantidad-box {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  width: auto;
+  min-width: 30px;
+  max-width: 70px;
+  padding: 0;
+  border: none;
+  transition: width 0.2s ease-in-out;
+}
+
+.cantidad-btn-outline {
+  background: white !important;
+  color: #08093f !important;
+  border: none;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.precio-dinamico {
+  font-size: 16px;
+  font-weight: bold;
+  white-space: nowrap;
+  transition: width 0.2s ease-in-out;
+  min-width: 80px;
+  text-align: right;
+}
+
+.disponibles {
+  font-size: 12px;
+  color: #c9c9c9;
+  margin-top: 20px;
+}
+
+.eliminar-btn {
+  background-color: #247323 !important;
+  color: white !important;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100px;
+}
+
+.total-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.encargar-btn {
+  background-color: #08093f !important;
+  color: white !important;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 18px;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.decoracion-verde {
+  width: 14px;
+  height: 100%;
+  background-color: #247323;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.boton-azul {
+  background-color: #08093f !important;
+  border-radius: 50%;
+}
+
+.boton-azul:hover {
+  background-color: #181bb9 !important;
+}
+
+.verde {
+  background-color: #247323 !important;
+}
+
+.verde--text {
+  color: #247323 !important;
+}
+
+.producto-detalle {
+  background-color: transparent;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.detalle-col p {
+  margin-bottom: 5px;
+}
+
+.detalle-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Estilos para el botón inferior en móviles */
+.boton-inferior-movil {
+  display: none;
+  /* Ocultar por defecto */
+}
+
+/* Estilos para el modal */
+.v-dialog {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.v-card {
+  border-radius: 12px;
+}
+
+.v-card-text {
+  padding: 16px;
+  /* Ajusta el padding para que los elementos no se salgan */
+}
+
+/* Estilos para los botones dentro del modal */
+.v-card-actions {
+  padding: 16px;
+  /* Asegura que los botones tengan espacio */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* Espacio entre los botones */
+}
+
+.encargar-btn {
+  background-color: #08093f !important;
+  color: white !important;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  width: 100%;
+  /* Ocupa todo el ancho disponible */
+  text-transform: uppercase;
+}
+
+.eliminar-btn {
+  background-color: #247323 !important;
+  color: white !important;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%;
+  /* Ocupa todo el ancho disponible */
+}
+
+/* Estilos responsivos para móviles */
+@media screen and (max-width: 600px) {
+  .boton-inferior-movil {
+    display: block;
+    /* Mostrar solo en móviles */
+    position: fixed;
+    bottom: 20px;
+    left: 10%;
+    width: 80%;
+    background-color: #08093f !important;
+    color: white !important;
+    font-weight: bold;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 16px;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .fondo {
+    padding: 8px;
+  }
+
+  .chip-filtro {
+    margin: 6px;
+    margin-bottom: 15px;
+    min-width: 70px;
+    max-width: calc(100% / 4 - 6px);
+    font-size: 10px;
+  }
+
+  .productos-wrapper {
+    flex-direction: column;
+  }
+
+  .productos-container {
+    max-height: 50vh;
+    padding: 8px;
+  }
+
+  .producto-info {
+    font-size: 12px;
+  }
+
+  .producto-card {
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .pedidos-card {
+    max-height: 50vh;
+    padding: 12px;
+  }
+
+  .pedido-item {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .cantidad-container {
+    padding-right: 8px;
+  }
+
+  .cantidad-wrapper {
+    min-width: 50px;
+    padding: 2px 6px;
+  }
+
+  .cantidad-box {
+    font-size: 14px;
+    min-width: 20px;
+    max-width: 50px;
+  }
+
+  .cantidad-btn-outline {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  .precio-dinamico {
+    font-size: 14px;
+    min-width: 60px;
+  }
+
+  .disponibles {
+    font-size: 10px;
+  }
+
+  .eliminar-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    width: 80px;
+  }
+
+  .total-container {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .encargar-btn {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .producto-detalle {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 14px;
+  }
+
+  .detalle-col p {
+    margin-bottom: 3px;
+  }
+
+  .boton-azul {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .boton-azul v-icon {
+    font-size: 18px !important;
+  }
+}
+
+.fondo {
+  background-color: #f5f5f5;
+}
+
+.chip-selected {
+  background-color: #2e7d32 !important;
+  color: white !important;
+}
+
+.boton-inferior-movil {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background-color: #2e7d32;
+  color: white;
+  z-index: 1000;
+}
