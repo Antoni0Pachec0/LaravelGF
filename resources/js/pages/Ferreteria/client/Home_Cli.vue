@@ -2,6 +2,7 @@
 import useHomeCli from '@/composables/client/home_cli'
 
 const {
+  handleImageError,
   dialog,
   mostrarPedidos,
   marcas,
@@ -35,42 +36,22 @@ const {
       <v-row no-gutters>
         <!-- Chips de marca -->
         <v-col cols="12" class="productos-wrapper d-flex flex-wrap">
-          <v-chip-group
-            active-class="verde white--text"
-            class="d-flex flex-wrap justify-center"
-          >
-            <v-chip
-              v-for="(marca, i) in marcas"
-              :key="i"
-              @click="filtrarMarca(marca)"
-              :class="{ 'chip-selected': marca === marcaSeleccionada }"
-              class="chip-filtro"
-            >
+          <v-chip-group active-class="verde white--text" class="d-flex flex-wrap justify-center">
+            <v-chip v-for="(marca, i) in marcas" :key="i" @click="filtrarMarca(marca)"
+              :class="{ 'chip-selected': marca === marcaSeleccionada }" class="chip-filtro">
               {{ marca }}
             </v-chip>
           </v-chip-group>
         </v-col>
 
         <!-- Productos -->
-        <v-col
-          :cols="isMobile ? 12 : mostrarPedidos ? 8 : 12"
-          class="pedidos-sidebar pr-3 pl-3 transition-width"
-        >
-          <v-card
-            class="productos-container pa-3"
-            style="max-height: 75vh; overflow-y: auto"
-          >
+        <v-col :cols="isMobile ? 12 : mostrarPedidos ? 8 : 12" class="pedidos-sidebar pr-3 pl-3 transition-width">
+          <v-card class="productos-container pa-3" style="max-height: 75vh; overflow-y: auto">
             <div class="productos-scroll" ref="productosScroll">
-              <v-card
-                v-for="(producto, index) in productos"
-                :key="producto.id_producto || index"
-                class="producto-card d-flex flex-column pa-3"
-              >
+              <v-card v-for="(producto, index) in productos" :key="producto.id_producto || index"
+                class="producto-card d-flex flex-column pa-3">
                 <div class="decoracion-verde"></div>
-                <v-row
-                  class="producto-info ml-5 align-center"
-                  @click="toggleDetalles(index)"
-                >
+                <v-row class="producto-info ml-5 align-center" @click="toggleDetalles(index)">
                   <v-col cols="10">
                     <strong>{{ producto.descripcion }}</strong>
                     <p>
@@ -83,18 +64,10 @@ const {
                     </p>
                   </v-col>
                   <v-col cols="2" class="d-flex align-center justify-end">
-                    <v-btn
-                      icon
-                      class="boton-azul"
-                      @click.stop="agregarACarrito(producto)"
-                    >
+                    <v-btn icon class="boton-azul" @click.stop="agregarACarrito(producto)">
                       <v-icon class="white--text">mdi-plus</v-icon>
                     </v-btn>
-                    <v-btn
-                      icon
-                      class="boton-azul ml-2"
-                      @click.stop="toggleDetalles(index)"
-                    >
+                    <v-btn icon class="boton-azul ml-2" @click.stop="toggleDetalles(index)">
                       <v-icon class="white--text">
                         {{
                           producto.mostrarDetalles
@@ -106,28 +79,19 @@ const {
                   </v-col>
                 </v-row>
                 <v-expand-transition>
-                  <div
-                    v-if="producto.mostrarDetalles"
-                    class="producto-detalle pa-0"
-                  >
+                  <div v-if="producto.mostrarDetalles" class="producto-detalle pa-0">
                     <v-row class="ma-0 pa-0 pl-10 align-start">
                       <v-col cols="6">
                         <p>
-                          <span class="verde--text font-weight-bold"
-                            >Descripción:</span
-                          >
+                          <span class="verde--text font-weight-bold">Descripción:</span>
                           {{ producto.descripcion }}
                         </p>
                         <p>
-                          <span class="verde--text font-weight-bold"
-                            >Precio público:</span
-                          >
+                          <span class="verde--text font-weight-bold">Precio público:</span>
                           ${{ producto.precio_publico_con_IVA }}
                         </p>
                         <p>
-                          <span class="verde--text font-weight-bold"
-                            >Precio Mayoreo:</span
-                          >
+                          <span class="verde--text font-weight-bold">Precio Mayoreo:</span>
                           ${{ producto.precio_mayoreo_con_IVA }}
                         </p>
                         <p>
@@ -141,9 +105,7 @@ const {
                           {{ producto.marca }}
                         </p>
                         <p>
-                          <span class="verde--text font-weight-bold"
-                            >Código:</span
-                          >
+                          <span class="verde--text font-weight-bold">Código:</span>
                           {{ producto.codigo }}
                         </p>
                         <p>
@@ -151,12 +113,19 @@ const {
                           {{ producto.peso_kg }}
                         </p>
                         <p>
-                          <span class="verde--text font-weight-bold"
-                            >Unidad:</span
-                          >
+                          <span class="verde--text font-weight-bold">Unidad:</span>
                           {{ producto.unidad }}
                         </p>
                       </v-col>
+                      <v-img
+                        :src="`https://www.truper.com/media/import/imagenes/${producto.clave}.jpg`"
+                        :alt="producto.descripcion"
+                        height="150"
+                        width="150"
+                        contain
+                        class="producto-imagen"
+                        @error="handleImageError(producto.clave)"
+                      />
                     </v-row>
                   </div>
                 </v-expand-transition>
@@ -169,32 +138,18 @@ const {
 
             <!-- Paginación -->
             <v-row justify="center" align="center" class="mt-4">
-              <v-btn
-                icon
-                @click="paginaActual > 1 && cambiarPagina(paginaActual - 1)"
-              >
+              <v-btn icon @click="paginaActual > 1 && cambiarPagina(paginaActual - 1)">
                 <v-icon>mdi-chevron-left</v-icon>
               </v-btn>
-              <div
-                class="d-flex align-center justify-center"
-                style="min-width: 80px"
-              >
-                <v-text-field
-                  v-model.number="paginaActual"
-                  type="number"
-                  class="mx-2 text-center"
-                  style="max-width: 80px"
-                  @keyup.enter="cambiarPagina(paginaActual)"
-                  @blur="cambiarPagina(paginaActual)"
-                />
+              <div class="d-flex align-center justify-center" style="min-width: 80px">
+                <v-text-field v-model.number="paginaActual" type="number" class="mx-2 text-center"
+                  style="max-width: 80px" @keyup.enter="cambiarPagina(paginaActual)"
+                  @blur="cambiarPagina(paginaActual)" />
                 <span>/ {{ totalPaginas }}</span>
               </div>
-              <v-btn
-                icon
-                @click="
-                  paginaActual < totalPaginas && cambiarPagina(paginaActual + 1)
-                "
-              >
+              <v-btn icon @click="
+                paginaActual < totalPaginas && cambiarPagina(paginaActual + 1)
+                ">
                 <v-icon>mdi-chevron-right</v-icon>
               </v-btn>
             </v-row>
@@ -202,46 +157,20 @@ const {
         </v-col>
 
         <!-- Pedidos (solo escritorio) -->
-        <v-col
-          cols="4"
-          v-if="mostrarPedidos && !isMobile"
-          class="pedidos-sidebar pr-3 pl-3"
-        >
-          <v-card
-            class="pedidos-card pa-4 d-flex flex-column"
-            style="height: 75vh"
-          >
+        <v-col cols="4" v-if="mostrarPedidos && !isMobile" class="pedidos-sidebar pr-3 pl-3">
+          <v-card class="pedidos-card pa-4 d-flex flex-column" style="height: 75vh">
             <div style="overflow-y: auto; flex: 1">
               <h2 class="font-weight-bold">Mis Pedidos</h2>
-              <div
-                v-for="(item, index) in carritoPaginado"
-                :key="index"
-                class="pedido-item"
-              >
+              <div v-for="(item, index) in carritoPaginado" :key="index" class="pedido-item">
                 <v-divider></v-divider>
                 <strong class="mb-2 d-block">{{ item.descripcion }}</strong>
                 <v-row align="center" class="cantidad-container mt-2">
                   <div class="cantidad-wrapper">
-                    <v-btn
-                      icon
-                      class="cantidad-btn-outline"
-                      @click="modificarCantidad(index + inicioCarrito, -1)"
-                    >
+                    <v-btn icon class="cantidad-btn-outline" @click="modificarCantidad(index + inicioCarrito, -1)">
                       <v-icon>mdi-minus</v-icon>
                     </v-btn>
-                    <v-text-field
-                      v-model="item.cantidad"
-                      class="cantidad-box"
-                      dense
-                      solo
-                      hide-details
-                      flat
-                    />
-                    <v-btn
-                      icon
-                      class="cantidad-btn-outline"
-                      @click="modificarCantidad(index + inicioCarrito, 1)"
-                    >
+                    <v-text-field v-model="item.cantidad" class="cantidad-box" dense solo hide-details flat />
+                    <v-btn icon class="cantidad-btn-outline" @click="modificarCantidad(index + inicioCarrito, 1)">
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
                   </div>
@@ -255,13 +184,9 @@ const {
                   </span>
                 </v-row>
                 <p class="disponibles">+50 disponibles</p>
-                <v-btn
-                  small
-                  class="eliminar-btn"
-                  @click="
-                    modificarCantidad(index + inicioCarrito, -item.cantidad)
-                  "
-                >
+                <v-btn small class="eliminar-btn" @click="
+                  modificarCantidad(index + inicioCarrito, -item.cantidad)
+                  ">
                   Eliminar
                 </v-btn>
               </div>
@@ -280,35 +205,21 @@ const {
                 </span>
               </div>
               <v-row justify="center" align="center">
-                <v-btn
-                  icon
-                  @click="
-                    paginaCarrito > 1 && cambiarPaginaCarrito(paginaCarrito - 1)
-                  "
-                >
+                <v-btn icon @click="
+                  paginaCarrito > 1 && cambiarPaginaCarrito(paginaCarrito - 1)
+                  ">
                   <v-icon>mdi-chevron-left</v-icon>
                 </v-btn>
-                <div
-                  class="d-flex align-center justify-center"
-                  style="min-width: 80px"
-                >
-                  <v-text-field
-                    v-model.number="paginaCarrito"
-                    type="number"
-                    class="mx-2 text-center"
-                    style="max-width: 80px"
-                    @keyup.enter="cambiarPaginaCarrito(paginaCarrito)"
-                    @blur="cambiarPaginaCarrito(paginaCarrito)"
-                  />
+                <div class="d-flex align-center justify-center" style="min-width: 80px">
+                  <v-text-field v-model.number="paginaCarrito" type="number" class="mx-2 text-center"
+                    style="max-width: 80px" @keyup.enter="cambiarPaginaCarrito(paginaCarrito)"
+                    @blur="cambiarPaginaCarrito(paginaCarrito)" />
                   <span>/ {{ totalPaginasCarrito }}</span>
                 </div>
-                <v-btn
-                  icon
-                  @click="
-                    paginaCarrito < totalPaginasCarrito &&
-                      cambiarPaginaCarrito(paginaCarrito + 1)
-                  "
-                >
+                <v-btn icon @click="
+                  paginaCarrito < totalPaginasCarrito &&
+                  cambiarPaginaCarrito(paginaCarrito + 1)
+                  ">
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-btn>
               </v-row>
@@ -320,11 +231,7 @@ const {
         </v-col>
 
         <!-- Botón flotante (móvil) -->
-        <v-btn
-          v-if="mostrarPedidos && isMobile"
-          class="boton-inferior-movil"
-          @click="dialog = true"
-        >
+        <v-btn v-if="mostrarPedidos && isMobile" class="boton-inferior-movil" @click="dialog = true">
           Ver Pedidos
         </v-btn>
 
@@ -333,70 +240,39 @@ const {
           <v-card>
             <v-card-title class="font-weight-bold">Mis Pedidos</v-card-title>
             <v-card-text style="max-height: 60vh; overflow-y: auto">
-              <div
-                v-for="(item, index) in carrito"
-                :key="index"
-                class="pedido-item"
-              >
+              <div v-for="(item, index) in carrito" :key="index" class="pedido-item">
                 <v-divider></v-divider>
                 <strong class="mb-2 d-block">{{ item.descripcion }}</strong>
                 <v-row align="center" class="cantidad-container mt-2">
                   <div class="cantidad-wrapper">
-                    <v-btn
-                      icon
-                      class="cantidad-btn-outline"
-                      @click="modificarCantidad(index, -1)"
-                    >
+                    <v-btn icon class="cantidad-btn-outline" @click="modificarCantidad(index, -1)">
                       <v-icon>mdi-minus</v-icon>
                     </v-btn>
-                    <v-text-field
-                      v-model="item.cantidad"
-                      class="cantidad-box"
-                      dense
-                      solo
-                      hide-details
-                      flat
-                    />
-                    <v-btn
-                      icon
-                      class="cantidad-btn-outline"
-                      @click="modificarCantidad(index, 1)"
-                    >
+                    <v-text-field v-model="item.cantidad" class="cantidad-box" dense solo hide-details flat />
+                    <v-btn icon class="cantidad-btn-outline" @click="modificarCantidad(index, 1)">
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
                   </div>
-                  <span class="precio-dinamico font-weight-bold"
-                    >${{ (item.precio * item.cantidad).toFixed(2) }}</span
-                  >
+                  <span class="precio-dinamico font-weight-bold">${{ (item.precio * item.cantidad).toFixed(2) }}</span>
                 </v-row>
                 <p class="disponibles">+50 disponibles</p>
-                <v-btn
-                  small
-                  class="eliminar-btn"
-                  @click="modificarCantidad(index, -item.cantidad)"
-                >
+                <v-btn small class="eliminar-btn" @click="modificarCantidad(index, -item.cantidad)">
                   Eliminar
                 </v-btn>
               </div>
               <v-divider class="mt-3"></v-divider>
               <div class="total-container mt-5">
                 <h3 class="font-weight-bold">Total</h3>
-                <span class="font-weight-bold precio"
-                  >${{ totalCarrito.toFixed(2) }}</span
-                >
+                <span class="font-weight-bold precio">${{ totalCarrito.toFixed(2) }}</span>
               </div>
             </v-card-text>
             <v-card-actions class="px-4 pb-4">
               <v-row>
                 <v-col cols="6">
-                  <v-btn block class="encargar-btn" @click="dialog = false"
-                    >Cerrar</v-btn
-                  >
+                  <v-btn block class="encargar-btn" @click="dialog = false">Cerrar</v-btn>
                 </v-col>
                 <v-col cols="6">
-                  <v-btn block class="encargar-btn" @click="encargarPedido"
-                    >Encargar</v-btn
-                  >
+                  <v-btn block class="encargar-btn" @click="encargarPedido">Encargar</v-btn>
                 </v-col>
               </v-row>
             </v-card-actions>
