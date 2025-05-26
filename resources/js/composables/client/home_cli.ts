@@ -207,7 +207,7 @@ export default function useHomeCli() {
   function handleImageError(event: Event) {
     // Establecer una imagen por defecto cuando falla la carga
     const imgElement = event.target as HTMLImageElement
-    imgElement.src = '/img/no-image.jpg' // Asegúrate de tener una imagen por defecto
+    imgElement.src = '/img/Logo.png' // Asegúrate de tener una imagen por defecto
   }
 
   return {

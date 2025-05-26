@@ -1,0 +1,8 @@
+---
+deployment:
+  tasks:
+    - export PATH=/opt/cpanel/ea-nodejs18/bin:$PATH
+    - npm install
+    - npm run build
+    - /opt/cpanel/composer/bin/composer install --no-dev --prefer-dist --optimize-autoloader
+    - php artisan config:cache
